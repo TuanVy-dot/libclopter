@@ -1,0 +1,10 @@
+logs/
+*.log
+
+bin/
+*.o
+*.so
+*.out
+*.exe
+
+test/
