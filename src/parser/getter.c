@@ -1,5 +1,6 @@
 #include "getter.h" /* already include parser_n_arg and parsing header */
 #include "log_api.h"
+#include <stdbool.h>
 
 int parser_search_positional(parser_t *parser, const char *name) {
     logger_tracef("enter parser_search_positional with parameters:\n"
@@ -96,7 +97,7 @@ _Bool args_get_flag(Args *args, char *name) {
     Parser *parser = (Parser *)args -> Parser;
     int index = parser_search_flag((parser_t *)parser, name);
     if (index < 0) {
-        return NULL;
+        return false;
     }
     return (args -> flags)[index];
 }

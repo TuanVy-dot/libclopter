@@ -8,6 +8,8 @@ bin_db/
 *.exe
 **/*.
 
+versions/
+
 test/
 tests/
 tests_bin/
