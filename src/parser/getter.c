@@ -3,7 +3,7 @@
 
 int parser_search_positional(parser_t *parser, const char *name) {
     logger_tracef("enter parser_search_positional with parameters:\n"
-            "- parser = %p\n- name = %p", &parser, name);
+            "- parser = %p\n- name = %p", parser, name);
 
     Parser *parser_imp = (Parser*)parser;
     arg_positional **curr = parser_imp -> positional_args;
@@ -30,7 +30,7 @@ int parser_search_positional(parser_t *parser, const char *name) {
 
 int parser_search_flag(parser_t *parser, const char *name) {
     logger_tracef("enter parser_search_flag with parameters:\n"
-            "- parser = %p\n- name = %p", &parser, name);
+            "- parser = %p\n- name = %p", parser, name);
 
     Parser *parser_imp = (Parser*)parser;
     arg_flag **curr = parser_imp -> flag_args;
@@ -58,7 +58,7 @@ int parser_search_flag(parser_t *parser, const char *name) {
 
 int parser_search_group(parser_t *parser, const char *name) {
     logger_tracef("enter parser_search_group with parameters:\n"
-            "- parser = %p\n- name = %p", &parser, name);
+            "- parser = %p\n- name = %p", parser, name);
 
     Parser *parser_imp = (Parser*)parser;
     arg_group **curr = parser_imp -> group_args;

@@ -59,31 +59,7 @@ Args *parser_parse_args(parser_t *parser, int argc, const char *argv[]) {
      * Simply check otbers and take the leftovers */
     arg_flag **flag_args = parser_imp -> flag_args;
     arg_group **group_args = parser_imp -> group_args;
-
-    int temp_top = 0;
-
-    /* O(n × m × k), I cannot do better :) */
-    /* Flags parsing */
-    logger_info("start to parse flags");
-    for (int i = 0; i < flags_count; i++) {
-        bool found = false;
-        arg_flag *curr_flag = flag_args[i];
-        const char **identifiers = curr_flag -> identifiers;
-        int n_identifiers = curr_flag -> n_identifiers;
-        for (int j = 0; j < argc && !found; j++) {
-            const char *arg = argv_c[j];
-            if (!arg) continue;
-            for (int k = 0; k < n_identifiers; k++) {
-                const char *identifier = identifiers[k];
-                if (STREQ(arg, identifier)) {
-                    argv_c[j] = NULL;
-                    found = true;
-                    break;
-                }
-            }
-        }
-        flag_container[temp_top++] = found;
-    }
+    int temp_top;
 
     /* Group parsing */
     temp_top = 0;
@@ -118,7 +94,29 @@ Args *parser_parse_args(parser_t *parser, int argc, const char *argv[]) {
     }
 
     temp_top = 0;
+    /* Flags parsing */
+    logger_info("start to parse flags");
+    for (int i = 0; i < flags_count; i++) {
+        bool found = false;
+        arg_flag *curr_flag = flag_args[i];
+        const char **identifiers = curr_flag -> identifiers;
+        int n_identifiers = curr_flag -> n_identifiers;
+        for (int j = 0; j < argc && !found; j++) {
+            const char *arg = argv_c[j];
+            if (!arg) continue;
+            for (int k = 0; k < n_identifiers; k++) {
+                const char *identifier = identifiers[k];
+                if (STREQ(arg, identifier)) {
+                    argv_c[j] = NULL;
+                    found = true;
+                    break;
+                }
+            }
+        }
+        flag_container[temp_top++] = found;
+    }
 
+    temp_top = 0;
 {
     int j = 0;
     for (int i = 0; i < positional_count && j < argc; i++) {
