@@ -2,9 +2,10 @@ logs/
 *.log
 
 bin/
+bin_db/
 *.o
-*.so
 *.out
 *.exe
 
 test/
+tests/
