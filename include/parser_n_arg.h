@@ -25,7 +25,6 @@ struct Parser {
 
 struct arg_positional {
     const char *name;
-    const void *default_value;
 };
 
 struct arg_flag {
@@ -39,17 +38,16 @@ struct arg_group {
     const char **identifiers;
     int n_identifiers;
     unsigned int nargs;
-    const void *default_values;
+    const char **default_values;
 };
 
 parser_t *parser_create(void);
 void parser_destroy(parser_t *parser);
-int parser_add_positional(parser_t *parser, const char *name, 
-                          const void *default_value);
+int parser_add_positional(parser_t *parser, const char *name);
 int parser_add_flag(parser_t *parser, const char *name,
                     const char **identifiers, int n_identifiers);
 int parser_add_group(parser_t *parser, const char *name, 
                      const char **identifiers, int n_identifiers,
-                     unsigned int nargs, const void *default_values);
+                     unsigned int nargs, const char **default_values);
 
 #endif

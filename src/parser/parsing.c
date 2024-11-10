@@ -70,9 +70,12 @@ Args *parser_parse_args(parser_t *parser, int argc, const char *argv[]) {
         int n_identifiers = curr_grp -> n_identifiers;
         int nargs = curr_grp -> nargs;
         const char **cont = calloc((nargs + 1), sizeof(void *));
-
         if (!cont) {
             goto grpcont_fail;
+        }
+        const char **default_values = curr_grp -> default_values;
+        if (default_values) {
+            memcpy((cont + 1), default_values, nargs * sizeof(void *));
         }
         int l = 0;
         /* Allocate memory enough to store this group, including its identifier */
