@@ -6,6 +6,11 @@ bin_db/
 *.o
 *.out
 *.exe
+**/*.
 
 test/
 tests/
+tests_bin/
+
+core
+

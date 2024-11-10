@@ -7,8 +7,6 @@
 /* parser_imp is used to name parser implementation type which is Parser
  * to distinguish with parser_t, the opaque */
 
-#define DEFAULT_DESC "No description provided"
-
 static int push(void *val, void ***stack, int *top);
 
 /* Push function for arguements addition,
@@ -35,8 +33,7 @@ static int push(void *val, void ***stack, int *top) {
 }
 
 /* Parsers functions */
-parser_t *parser_create(const char *description) {
-    logger_tracef("enter parser_create with parameter:\n%p", description);
+parser_t *parser_create(void) {
     Parser *parser = (Parser*)malloc(sizeof(Parser));
     logger_debugf("memory allocation with size %d(of parser_t) to variable of name 'parser'", sizeof(Parser));
 
@@ -45,13 +42,6 @@ parser_t *parser_create(const char *description) {
         logger_info("return with NULL");
         return NULL;
     }
-
-    logger_infof("if description is not NULL, assign to parser else use default, description = %p", description);
-    if (description) {
-        parser -> description = description;
-    } else {
-        parser -> description = DEFAULT_DESC;
-}
 
     logger_info("assign NULL to all arrays and 0 to counts");
     parser -> positional_args = NULL;
@@ -78,11 +68,11 @@ void parser_destroy(parser_t *parser) {
 }
 
 /* arguements addition */
-int parser_add_positional(parser_t *parser, const char *name, const char *desc,
+int parser_add_positional(parser_t *parser, const char *name,
                           const void *default_value) {
     logger_tracef("enter parser_add_positional with parameters:\n"
-            "- parser = %p\n- name = %p\n- desc = %p\n"
-            "- default_value = %p", parser, name, desc, default_value);
+            "- parser = %p\n- name = %p\n"
+            "- default_value = %p", parser, name, default_value);
     arg_positional *arg = (arg_positional*)malloc(sizeof(arg_positional));
     logger_debugf("memory allocation with size %d(of arg_positional) and assign to variable 'arg' at address %p", sizeof(arg_positional), arg);
     if (!arg) {
@@ -98,12 +88,6 @@ int parser_add_positional(parser_t *parser, const char *name, const char *desc,
         return 1; // name is required
     }
     arg -> name = name;
-
-    if (desc) {
-        arg -> desc = desc;
-    } else {
-        arg -> desc = DEFAULT_DESC;
-    }
 
     if (default_value) {
         arg -> default_value = default_value;
@@ -130,11 +114,10 @@ int parser_add_positional(parser_t *parser, const char *name, const char *desc,
 }
 
 int parser_add_flag(parser_t *parser, const char *name,
-                    const char **identifiers, int n_identifiers,
-                    const char *desc) {
+                    const char **identifiers, int n_identifiers) {
     logger_tracef("enter parser_add_flag with parameters:\n"
-            "- parser = %p\n- name = %p\n- identifiers = %p\n- n_identifiers = %d\n- desc = %p", 
-            parser, name, identifiers, n_identifiers, desc);
+            "- parser = %p\n- name = %p\n- identifiers = %p\n- n_identifiers = %d\n", 
+            parser, name, identifiers, n_identifiers);
     
     arg_flag *arg = (arg_flag*)malloc(sizeof(arg_flag));
     logger_debugf("memory allocation with size %d(of arg_flag) and assign to variable 'arg' at address %p", 
@@ -156,12 +139,6 @@ int parser_add_flag(parser_t *parser, const char *name,
     arg->identifiers = identifiers;
     arg->n_identifiers = n_identifiers;
 
-    if (desc) {
-        arg->desc = desc;
-    } else {
-        arg->desc = DEFAULT_DESC;
-    }
-
     logger_info("push arg into parser flag_args array");
     Parser *parser_imp = (Parser*)parser;
     int i = push(arg, (void ***)&parser_imp -> flag_args, &parser_imp -> flag_args_count);
@@ -179,12 +156,11 @@ int parser_add_flag(parser_t *parser, const char *name,
 
 int parser_add_group(parser_t *parser, const char *name, 
                      const char **identifiers, int n_identifiers,
-                     const char *desc, unsigned int nargs,
-                     const void *default_values) {
+                     unsigned int nargs, const void *default_values) {
     logger_tracef("enter parser_add_group with parameters:\n"
             "- parser = %p\n- name = %p\n- identifiers = %p\n- n_identifiers = %d\n"
-            "- desc = %p\n- nargs = %u\n- default_values = %p", 
-            parser, name, identifiers, n_identifiers, desc, nargs, default_values);
+            "- nargs = %u\n- default_values = %p", 
+            parser, name, identifiers, n_identifiers, nargs, default_values);
 
     arg_group *arg = (arg_group*)malloc(sizeof(arg_group));
     logger_debugf("memory allocation with size %d(of arg_group) and assign to variable 'arg' at address %p", 
@@ -205,7 +181,6 @@ int parser_add_group(parser_t *parser, const char *name,
     arg->name = name;
     arg->identifiers = identifiers;
     arg->n_identifiers = n_identifiers;
-    arg->desc = desc ? desc : DEFAULT_DESC;
     arg->nargs = nargs;
     arg->default_values = default_values;
 

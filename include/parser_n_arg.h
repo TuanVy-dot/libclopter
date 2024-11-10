@@ -15,7 +15,6 @@ typedef struct Parser Parser;
 typedef struct parser_t *parser_t;
 
 struct Parser {
-    const char *description;
     arg_positional **positional_args;
     int positional_args_count;
     arg_flag **flag_args;
@@ -26,7 +25,6 @@ struct Parser {
 
 struct arg_positional {
     const char *name;
-    const char *desc;
     const void *default_value;
 };
 
@@ -34,28 +32,24 @@ struct arg_flag {
     const char *name;
     const char **identifiers;
     int n_identifiers;
-    const char *desc;
 };
 
 struct arg_group {
     const char *name;
     const char **identifiers;
     int n_identifiers;
-    const char *desc;
     unsigned int nargs;
     const void *default_values;
 };
 
-parser_t *parser_create(const char *description);
+parser_t *parser_create(void);
 void parser_destroy(parser_t *parser);
-int parser_add_positional(parser_t *parser, const char *name, const char *desc,
+int parser_add_positional(parser_t *parser, const char *name, 
                           const void *default_value);
 int parser_add_flag(parser_t *parser, const char *name,
-                    const char **identifiers, int n_identifiers,
-                    const char *desc);
+                    const char **identifiers, int n_identifiers);
 int parser_add_group(parser_t *parser, const char *name, 
                      const char **identifiers, int n_identifiers,
-                     const char *desc, unsigned int nargs,
-                     const void *default_values);
+                     unsigned int nargs, const void *default_values);
 
 #endif
