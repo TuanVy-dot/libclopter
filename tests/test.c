@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include <mylib/clopter/1.0.0/clopter.h>
+#include "../api/clopter.h"
 
+/* AI generated :) */
 int main(int argc, const char *argv[]) {
     // Create a new parser
     parser_t *parser = parser_create();

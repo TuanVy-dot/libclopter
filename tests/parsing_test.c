@@ -3,6 +3,12 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+/*
+ * Testing with log usage, don't forget to link against the debug version
+ * And create the logs directory
+ * This is my logging library, if interested, see liblogger repo
+ */
+
 LOGGER *CLOPTER;
 
 int main(int argc, const char *argv[]) {

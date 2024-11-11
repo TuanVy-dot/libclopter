@@ -1,6 +1,9 @@
 #include "../api/clopter.h"
 #include <stdio.h>
 
+/* Write to a file */
+/* Example about positional and flags */
+
 int main(int argc, const char *argv[]) {
     if (argc < 2) {
         printf("Usage: %s [options] [filename]\n", argv[0]);

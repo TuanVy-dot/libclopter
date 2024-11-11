@@ -5,6 +5,10 @@
 #include <mylib/clopter/1.0.0/clopter.h>
 
 /* I forgot to free memory sadly but it just a test :) */
+/* Don't forget to call parser_destroy and args_destroy like I did
+ * This code suck by the way, but you get the idea 
+ * Inheritance is coming in the next version, s you won't need
+ * to define fname twice in both parser anymore */
 
 int main(int argc, const char *argv[]) {
     if (argc < 3) {

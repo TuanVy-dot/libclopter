@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 
+/* This is also AI generated */
+/* Example about creating subcommands */
+
 // Function prototypes for subcommands
 int handle_init(int argc, const char *argv[]);
 int handle_remote(int argc, const char *argv[]);

@@ -39,5 +39,8 @@ int main(int argc, const char *argv[]) {
         fclose(file);
     }
 
+    parser_destroy(parser);
+    args_destroy(args);
+
     return 0;
 }
