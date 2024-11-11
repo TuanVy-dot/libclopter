@@ -85,28 +85,46 @@ int parser_search_group(parser_t *parser, const char *name) {
 }
 
 const char *args_get_positional(Args *args, char *name) {
+    logger_tracef("enter args_get_positional with parameters:\n"
+            "- args = %p\n- name = %p", args, name);
     Parser *parser = (Parser *)args -> Parser;
     int index = parser_search_positional((parser_t *)parser, name);
     if (index < 0) {
+        logger_debug("positional not found");
+        logger_trace("return NULL");
         return NULL;
     }
+    logger_debug("positional found return value");
+    logger_tracef("return %s", (args -> positional)[index]);
     return (args -> positional)[index];
 }
 
 _Bool args_get_flag(Args *args, char *name) {
+    logger_tracef("enter args_get_flag with parameters:\n"
+            "- args = %p\n- name = %p", args, name);
     Parser *parser = (Parser *)args -> Parser;
     int index = parser_search_flag((parser_t *)parser, name);
     if (index < 0) {
+        logger_debug("flag not found");
+        logger_trace("return NULL");
         return false;
     }
+    logger_debug("flag found return value");
+    logger_tracef("return %s", (args -> positional)[index]);
     return (args -> flags)[index];
 }
 
 const char **args_get_group(Args *args, char *name) {
+    logger_tracef("enter args_get_group with parameters:\n"
+            "- args = %p\n- name = %p", args, name);
     Parser *parser = (Parser *)args -> Parser;
     int index = parser_search_group((parser_t *)parser, name);
     if (index < 0) {
+        logger_debug("group not found");
+        logger_trace("return NULL");
         return NULL;
     }
+    logger_debug("group found return value");
+    logger_tracef("return %s", (args -> positional)[index]);
     return (args -> groups)[index];
 }

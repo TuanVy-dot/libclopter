@@ -2,16 +2,17 @@
 
 #define CLOPTER_H
 
-enum TypeCodes {
-    TYPE_INT, TYPE_FLOAT, TYPE_STR
-};
-typedef enum TypeCodes typecode;
+/*
+ * Define parsers and arguements
+ * With functions for creations and removals
+ */
 
 typedef struct arg_positional arg_positional;
 typedef struct arg_flag arg_flag;
 typedef struct arg_group arg_group;
 typedef struct Parser Parser;
 
+/* Opaque Parser type */
 typedef struct parser_t *parser_t;
 
 struct Parser {

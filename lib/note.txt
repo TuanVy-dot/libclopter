@@ -1,0 +1,5 @@
+This is my own library, so check my liblogger repo for more infos or suggestions
+
+Use rule libdb with make to compile with logging, you must declare 
+LOGGER *CLOPTER;
+and set appropriate configs in the source that use the debug version

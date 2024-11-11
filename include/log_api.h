@@ -1,8 +1,9 @@
 /*
  * A liblogger(by myself, github - TuanVy-dot/liblogger) library supporting API
- * Define LOGGER *CLOPTER in your source and see it working
+ * Define LOGGER *CLOPTER in your source and use debug version(with -DLOG)
+ * See my repo for more info
  * with your own config (must compile using make libdb, not lib, store in bin_db)
- */
+*/
 
 #ifndef LOG_API_H
 #define LOG_API_H
@@ -29,11 +30,10 @@ extern LOGGER *CLOPTER; // declare anyway to avoid warning
 
 #ifdef LOG
 
-/* redefine logging macro to nof need to specify logger everytimes */
+/* redefine logging macro to not need to specify logger everytimes */
 
 #define logger_logf(level, msg, ...) \
 __logger_msg__(__FILE__, __LINE__, CLOPTER, level, msg, __VA_ARGS__)
-// Use this instead of __logger_msg__
 
 #define logger_tracef(msg, ...) \
 __logger_msg__(__FILE__, __LINE__, CLOPTER, TRACE, msg, __VA_ARGS__)
@@ -50,7 +50,6 @@ __logger_msg__(__FILE__, __LINE__, CLOPTER, FATAL, msg, __VA_ARGS__)
 
 #define logger_log(level, msg) \
 __logger_msg__(__FILE__, __LINE__, CLOPTER, level, msg)
-// Use this instead of __logger_msg__
 
 #define logger_trace(msg) \
 __logger_msg__(__FILE__, __LINE__, CLOPTER, TRACE, msg)
@@ -68,20 +67,19 @@ __logger_msg__(__FILE__, __LINE__, CLOPTER, FATAL, msg)
 #else
 
 /* redefine macros with nothing to remove by the preprocessor */
-#define logger_log(level, msg)
-#define logger_trace(msg)
-#define logger_debug(msg)
-#define logger_info(msg)
-#define logger_warning(msg)
-#define logger_error(msg)
-#define logger_fatal(msg)
-
-#define logger_logf(level, msg, ...)
-#define logger_tracef(msg, ...)
-#define logger_debugf(msg, ...)
-#define logger_infof(msg, ...)
-#define logger_warningf(msg, ...)
-#define logger_errorf(msg, ...)
+#define logger_log(level, msg) (void *)0
+#define logger_trace(msg) (void *)0
+#define logger_debug(msg) (void *)0
+#define logger_info(msg) (void *)0
+#define logger_warning(msg) (void *)0
+#define logger_error(msg) (void *)0
+#define logger_fatal(msg) (void *)0
+#define logger_logf(level, msg, ...) (void *)0
+#define logger_tracef(msg, ...) (void *)0
+#define logger_debugf(msg, ...) (void *)0
+#define logger_infof(msg, ...) (void *)0
+#define logger_warningf(msg, ...) (void *)0
+#define logger_errorf(msg, ...) (void *)0
 
 #endif
 

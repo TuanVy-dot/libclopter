@@ -55,14 +55,29 @@ parser_t *parser_create(void) {
 
 void parser_destroy(parser_t *parser) {
     Parser *parser_imp = (Parser *)parser;
-    if (parser_imp -> positional_args) {
-        free(parser_imp -> positional_args);
+    int posc = parser_imp -> positional_args_count;
+    arg_positional **positional_args = parser_imp -> positional_args;
+    int flgc = parser_imp -> flag_args_count;
+    arg_flag **flag_args = parser_imp -> flag_args;
+    int grpc = parser_imp -> group_args_count;
+    arg_group **group_args = parser_imp -> group_args;
+    if (positional_args) {
+        while (posc--) {
+            free(positional_args[posc - 1]);
+        }
+        free(positional_args);
     }
-    if (parser_imp -> flag_args) {
-        free(parser_imp -> flag_args);
+    if (flag_args) {
+        while (flgc--) {
+            free(flag_args[flgc - 1]);
+        }
+        free(flag_args);
     }
-    if (parser_imp -> group_args) {
-        free(parser_imp -> group_args);
+    if (group_args) {
+        while (grpc--) {
+            free(group_args[grpc - 1]);
+        }
+        free(group_args);
     }
     free(parser_imp);
 }
