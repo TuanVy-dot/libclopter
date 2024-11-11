@@ -10,8 +10,6 @@ bin_db/
 
 versions/
 
-test/
-tests/
 tests_bin/
 
 core
