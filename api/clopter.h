@@ -23,16 +23,17 @@ typedef struct parser_t parser_t;
 
 struct Args {
     const parser_t *const Parser;
-    const char **positional;
-    _Bool *flags;
-    const char ***groups;
-    const char **leftovers;
+    const char **const positional;
+    const _Bool *const flags;
+    const char ***const groups;
+    const char **const leftovers;
     const int remain;
 };
 typedef struct Args Args;
 
 /* Parsers amd arguements creation */
 /* Create and free parsers */
+/* Return NULL if allocation fail */
 parser_t *parser_create(void);
 void parser_destroy(parser_t *parser);
 
@@ -45,12 +46,13 @@ int parser_add_group(parser_t *parser, const char *name,
                      unsigned int nargs, const char **default_values);
 
 /* Arguements parsing and freeing */
+/* Return NULL if allocation fail */
 Args *parser_parse_args(parser_t *parser, int argc, const char *argv[]);
 void args_destroy(Args *args);
 
 /* Getters */
 
-/* Get index of an arg within parser with name */
+/* Get index of an arg within parser with name (-1 if not found) */
 int parser_search_positional(parser_t *parser, const char *name);
 int parser_search_flag(parser_t *parser, const char *name);
 int parser_search_group(parser_t *parser, const char *name);

@@ -13,7 +13,15 @@ int main(int argc, const char *argv[]) {
     }
 
     parser_t *parser = parser_create();
+    if (!parser) {
+        perror("Error: ");
+        return 1;
+    }
     Args *args = parser_parse_args(parser, argc, argv);
+    if (!args) {
+        perror("Error: ");
+        return 1;
+    }
 
     const char **filenames = (args -> leftovers);
     int count = args -> remain;

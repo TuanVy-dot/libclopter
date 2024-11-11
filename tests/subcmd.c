@@ -5,6 +5,10 @@
 /* This is also AI generated */
 /* Example about creating subcommands */
 
+/* Allocation might fail, meaning it might return NULL
+ * be sure to check when create parsrs or parse args
+ * It forgot to do it here */
+
 // Function prototypes for subcommands
 int handle_init(int argc, const char *argv[]);
 int handle_remote(int argc, const char *argv[]);

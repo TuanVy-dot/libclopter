@@ -82,6 +82,11 @@ void parser_destroy(parser_t *parser) {
     free(parser_imp);
 }
 
+parser_t *parser_inherit(parser_t base) {
+    Parser *base_imp = (Parser *)base;
+
+}
+
 /* arguements addition */
 int parser_add_positional(parser_t *parser, const char *name) {
     logger_tracef("enter parser_add_positional with parameters:\n"

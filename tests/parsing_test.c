@@ -17,6 +17,10 @@ int main(int argc, const char *argv[]) {
     logger_level_color_default();
 
     parser_t *parser = parser_create();
+    if (!parser) {
+        perror("Error: ");
+        return 1;
+    }
     const char *help_indentifiers[] = {"-h"};
     parser_add_flag(parser, "help", help_indentifiers, 1);
     const char *out_iden[] = {"-o", "--output"};
@@ -24,6 +28,10 @@ int main(int argc, const char *argv[]) {
     parser_add_group(parser, "output", out_iden, 2, 1, out_default);
     parser_add_positional(parser, "filename");
     Args *args = parser_parse_args(parser, argc, argv);
+    if (!args) {
+        perror("Error: ");
+        return 1;
+    }
 
     printf("%d\n", parser_search_positional(parser, "filename"));
 
