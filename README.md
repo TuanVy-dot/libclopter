@@ -21,7 +21,7 @@ Clopter is an easy to use commandline arguements parser.
 
 - More to come!
 
-You can check the tests file for example usage, but it fairly intuitive, I will add documentations later for more advanced use and understanding of implementation.
+You can check the tests file for example usage, but it fairly intuitive, I will add documentations later for more advanced use and understanding of implementation. The API is in api/ include it to use.
 
 # Installation
 ---
