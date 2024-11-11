@@ -1,0 +1,5 @@
+Version 2.0.0
+Breaking changes: Improve type safety in Args struct to all const to avoid modify, could break old codes.
+
+New:
+parser inheritance via parser_inherit function, create a parser with arguements the same as the base, possible to add new unique arguements on its own
