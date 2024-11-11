@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../api/clopter.h"
+#include "clopter.h"
 
 /* AI generated :) */
 int main(int argc, const char *argv[]) {

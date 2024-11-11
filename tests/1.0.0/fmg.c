@@ -2,7 +2,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <dirent.h>
-#include "../api/clopter.h"
+#include "clopter.h"
 
 /* I forgot to free memory sadly but it just a test :) */
 /* Don't forget to call parser_destroy and args_destroy like I did

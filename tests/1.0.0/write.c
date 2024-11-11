@@ -1,4 +1,4 @@
-#include "../api/clopter.h"
+#include "clopter.h"
 #include <stdio.h>
 
 /* Write to a file */
