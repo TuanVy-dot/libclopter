@@ -82,9 +82,48 @@ void parser_destroy(parser_t *parser) {
     free(parser_imp);
 }
 
-parser_t *parser_inherit(parser_t base) {
+parser_t *parser_inherit(parser_t *base) {
     Parser *base_imp = (Parser *)base;
+    Parser *parser = malloc(sizeof(Parser));
+    if (!parser) {
+        goto parser_fail;
+    }
+    int posc, flgc, grpc;
+    parser -> positional_args_count = posc = base_imp -> positional_args_count;
+    parser -> flag_args_count = flgc = base_imp -> flag_args_count;
+    parser -> group_args_count = grpc = base_imp -> group_args_count;
 
+    arg_positional **positional_args = malloc(posc * sizeof(void *));
+    if (!positional_args) {
+        goto pos_fail;
+    }
+    arg_flag **flag_args = malloc(flgc * sizeof(void *));
+    if (!flag_args) {
+        goto flg_fail;
+    }
+    arg_group **group_args = malloc(grpc * sizeof(void *));
+    if (!group_args) {
+        goto grp_fail;
+    }
+
+    memcpy(positional_args, base_imp -> positional_args, posc * sizeof(void *));
+    memcpy(flag_args, base_imp -> flag_args, flgc * sizeof(void *));
+    memcpy(group_args, base_imp -> group_args, grpc * sizeof(void *));
+
+    parser -> positional_args = positional_args;
+    parser -> flag_args = flag_args;
+    parser -> group_args = group_args;
+    
+    return (parser_t *)parser;
+
+grp_fail:
+    free(flag_args);
+flg_fail:
+    free(positional_args);
+pos_fail:
+    free(parser);
+parser_fail:
+    return NULL;
 }
 
 /* arguements addition */

@@ -37,6 +37,10 @@ typedef struct Args Args;
 parser_t *parser_create(void);
 void parser_destroy(parser_t *parser);
 
+/* Create a parser with arguements set to the same as base
+ * Point to the same arg object for better memory efficiency */
+parser_t *parser_inherit(parser_t *base);
+
 /* Add arguements to a parser */
 int parser_add_positional(parser_t *parser, const char *name);
 int parser_add_flag(parser_t *parser, const char *name,
