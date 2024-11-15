@@ -1,3 +1,6 @@
+# .gi files to be ignore by git
+*.gi
+
 logs/
 *.log
 
