@@ -3,3 +3,4 @@ Breaking changes: Improve type safety in Args struct to all const to avoid modif
 
 New:
 parser inheritance via parser_inherit function, create a parser with arguements the same as the base, possible to add new unique arguements on its own
+The ability to remove arguements or destroy them (destroy meaning free)

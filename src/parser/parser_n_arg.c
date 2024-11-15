@@ -1,6 +1,8 @@
 #include "parser_n_arg.h"
 #include "log_api.h"
+#include "getter.h"
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -83,6 +85,7 @@ void parser_destroy(parser_t *parser) {
 }
 
 parser_t *parser_inherit(parser_t *base) {
+    logger_tracef("enter parser_inherit with parameters:\n- base = %p", base);
     Parser *base_imp = (Parser *)base;
     Parser *parser = malloc(sizeof(Parser));
     if (!parser) {
@@ -247,5 +250,143 @@ int parser_add_group(parser_t *parser, const char *name,
     }
 
     logger_trace("return with code 0");
+    return 0;
+}
+
+int parser_remove_positional(parser_t *parser, const char *name) {
+    Parser *parser_imp = (Parser *)parser;
+    int index = parser_search_positional(parser, name);
+    if (index < 0) {
+        return 1;
+    }
+    arg_positional **positional_args = parser_imp -> positional_args;
+    int *posc = &(parser_imp -> positional_args_count);
+    size_t size = *posc * sizeof(void *);
+
+    if (*posc == 0 || (*posc - 1) == 0) {
+        *posc = 0;
+        parser_imp -> positional_args = NULL;
+        return 0;
+    }
+
+    arg_positional **old_args = malloc(size);
+    if (!old_args) {
+        return 1;
+    }
+    memcpy(old_args, positional_args, size);
+
+    memmove(&positional_args[index], &positional_args[index + 1], 
+            (*posc - index - 1) * sizeof(void *));
+    arg_positional **temp = realloc(positional_args, (*posc - 1) * sizeof(void *));
+    if (!temp) {
+        memcpy(positional_args, old_args, size);
+        free(old_args);
+        return 1;
+    }
+    free(old_args);
+    parser_imp -> positional_args = temp;
+    (*posc)--;
+    return 0;
+}
+
+int parser_remove_flag(parser_t *parser, const char *name) {
+    Parser *parser_imp = (Parser *)parser;
+    int index = parser_search_flag(parser, name);
+    if (index < 0) {
+        return 1;
+    }
+    arg_flag **flag_args = parser_imp -> flag_args;
+    int *posc = &(parser_imp -> flag_args_count);
+    size_t size = *posc * sizeof(void *);
+
+    if (*posc == 0 || (*posc - 1) == 0) {
+        *posc = 0;
+        parser_imp -> flag_args = NULL;
+        return 0;
+    }
+
+    arg_flag **old_args = malloc(size);
+    if (!old_args) {
+        return 1;
+    }
+    memcpy(old_args, flag_args, size);
+
+    memmove(&flag_args[index], &flag_args[index + 1], 
+            (*posc - index - 1) * sizeof(void *));
+    arg_flag **temp = realloc(flag_args, (*posc - 1) * sizeof(void *));
+    if (!temp) {
+        memcpy(flag_args, old_args, size);
+        free(old_args);
+        return 1;
+    }
+    free(old_args);
+    parser_imp -> flag_args = temp;
+    (*posc)--;
+    return 0;
+}
+
+int parser_remove_group(parser_t *parser, const char *name) {
+    Parser *parser_imp = (Parser *)parser;
+    int index = parser_search_group(parser, name);
+    if (index < 0) {
+        return 1;
+    }
+    arg_group **group_args = parser_imp -> group_args;
+    int *posc = &(parser_imp -> group_args_count);
+    size_t size = *posc * sizeof(void *);
+
+    if (*posc == 0 || (*posc - 1) == 0) {
+        *posc = 0;
+        parser_imp -> group_args = NULL;
+        return 0;
+    }
+
+    arg_group **old_args = malloc(size);
+    if (!old_args) {
+        return 1;
+    }
+    memcpy(old_args, group_args, size);
+
+    memmove(&group_args[index], &group_args[index + 1], 
+            (*posc - index - 1) * sizeof(void *));
+    arg_group **temp = realloc(group_args, (*posc - 1) * sizeof(void *));
+    if (!temp) {
+        memcpy(group_args, old_args, size);
+        free(old_args);
+        return 1;
+    }
+    free(old_args);
+    parser_imp -> group_args = temp;
+    (*posc)--;
+    return 0;
+}
+
+int parser_destroy_positional(parser_t *parser, const char *name) {
+    Parser *parser_imp = (Parser *)parser;
+    int index = parser_search_positional(parser, name);
+    if (index < 0) {
+        return 1;
+    }
+    free((parser_imp -> positional_args)[index]);
+    return 0;
+}
+
+int parser_destroy_flag(parser_t *parser, const char *name) {
+    Parser *parser_imp = (Parser *)parser;
+    int index = parser_search_flag(parser, name);
+    if (index < 0) {
+        return 1;
+    }
+    free((parser_imp -> flag_args)[index]);
+    return 0;
+}
+
+int parser_destroy_group(parser_t *parser, const char *name) {
+    Parser *parser_imp = (Parser *)parser;
+    int index = parser_search_group(parser, name);
+    if (index < 0) {
+        return 1;
+    }
+    free((parser_imp -> group_args)[index]);
     return 0;
 }
