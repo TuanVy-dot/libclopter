@@ -5,7 +5,7 @@ This project is for my practice, I only have 1 month experience in C and is not 
 
 Clopter is an easy to use commandline arguements parser.
 
-**Version**: v1.0.0
+**Version**: v2.0.0
 
 **Key features**:
 
